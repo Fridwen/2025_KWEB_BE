@@ -1,14 +1,15 @@
-const http = require('http');
-
-const hostname = '127.0.0.1';
+const express = require('express');
+const app = express();
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hello World!\n');
-});
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+const objectToString = (obj) => Object.keys(obj).map(k => `${k}: ${obj[k]}`).join('\n');
+
+app.get('/', (req, res) => res.send(objectToString(req.query)));
+app.post('/', (req, res) => res.send(objectToString(req.body)));
+app.put('/', (req, res) => res.send(objectToString(req.body)));
+app.delete('/', (req, res) => res.send(objectToString(req.body)));
+
+app.listen(port, () => console.log(`Server listening on port ${port}!`));
