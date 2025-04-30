@@ -17,8 +17,8 @@ function facto(n) {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.get('/factorial', (req, res) => {
-  const { factorial } = req.query;
-  res.redirect(`/factorial/${factorial}`)
+  const { number } = req.query;
+  res.redirect(`/factorial/${number}`)
   });
 app.get('/factorial/:number', (req, res) => res.send(`${req.params.number}! is ${facto(Number(req.params.number))}`));
 
